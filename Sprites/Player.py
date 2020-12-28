@@ -40,18 +40,24 @@ class Player(PixSprite):
     def process_vertical_movement(self, keyboard_state):
         if keyboard_state[pygame.K_d]:
             self.flip = True
-            self.move_player(Config.WALKING_SPEED, 0)
+            self.move(Config.WALKING_SPEED, 0)
+
             for block in self._engine.all_sprites[Engine.BLOCKS]:
                 if self.collide(block) and block.position.y >= Config.BLOCK_MIN_HEIGHT_TO_THREAT_AS_WALL:
-                    self.move_player(Config.WALKING_SPEED, -180)
-                    break
+                    self.move(Config.WALKING_SPEED, -180)
+                    return
+            self.move(Config.WALKING_SPEED, -180)
+            self.move_player(Config.WALKING_SPEED, 0)
         elif keyboard_state[pygame.K_a]:
             self.flip = False
-            self.move_player(Config.WALKING_SPEED, -180)
+            self.move(Config.WALKING_SPEED, -180)
+
             for block in self._engine.all_sprites[Engine.BLOCKS]:
                 if self.collide(block) and block.position.y >= Config.BLOCK_MIN_HEIGHT_TO_THREAT_AS_WALL:
-                    self.move_player(Config.WALKING_SPEED, 0)
-                    break
+                    self.move(Config.WALKING_SPEED, 0)
+                    return
+            self.move(Config.WALKING_SPEED, 0)
+            self.move_player(Config.WALKING_SPEED, -180)
 
     def process_falling_and_fall_damage(self):
         if self.speed != 0:

@@ -5,6 +5,7 @@ from pygame import Rect
 from pygame.math import Vector2
 
 import Config
+import StaticBlocksDescriptions as blocks_types
 from SpecialSprites import MouseSprite
 from SpecialSprites.SpecialSprite import SpecialSprite
 from Sprites.Block import Block
@@ -22,8 +23,20 @@ class MousePointer(SpecialSprite):
         self.update_pointer_position()
         mouse_state = pygame.mouse.get_pressed(3)
         if mouse_state[0]:
-            self.blocks_list.append(Block())
-            
+            if not self.is_block_selected():
+                self.blocks_list.append(Block(self.position,blocks_types.Block_types[2]))
+        elif mouse_state[2]:
+            for block in self.blocks_list:
+                if block.position == self.position:
+                    self.blocks_list.remove(block)
+                    break
+
+    def is_block_selected(self):
+        for block in self.blocks_list:
+            if block.position == self.position:
+                return True
+        return False
+
     def update_pointer_position(self):
         x_diff = self.mouse.position.x - self.position.x
         y_diff = self.mouse.position.y - self.position.y

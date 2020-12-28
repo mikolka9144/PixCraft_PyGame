@@ -28,7 +28,6 @@ class PixSprite(pygame.sprite.Sprite):
         x = value.x + (Config.WIDTH / 2)
         y = (Config.HEIGHT / 2) - value.y
         self.rect.center = vector(x, y)
-
     def move(self, dist, rot):
         multiply = 0.017453292519944
         num = 90.0

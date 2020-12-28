@@ -13,4 +13,3 @@ class Mouse(SpecialSprite):
     def update(self):
         mousePos = pygame.mouse.get_pos()
         self.rect.center = (mousePos[0],mousePos[1])
-        print(self.position)

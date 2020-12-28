@@ -1,6 +1,7 @@
 import sys
 import Config
 import pygame
+import UpdateFrame
 
 
 class GameEngine:
@@ -20,12 +21,7 @@ class GameEngine:
 
             self.displaysurface.fill((0, 0, 100))
 
-            for entity in self.all_sprites.values():
-                for sprite in entity:
-                    if self.IsRenderable(sprite.rect) or sprite.force_update:
-                        sprite.update()
-                        if sprite.surf is not None:
-                            self.displaysurface.blit(sprite.surf, sprite.rect)
+            UpdateFrame.do_update(self)
 
             pygame.display.update()
             self.FramePerSec.tick(Config.FPS)
